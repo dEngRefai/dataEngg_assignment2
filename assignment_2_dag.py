@@ -129,12 +129,49 @@ def extractfromGithub():
     
     
     
+def selectColumns_minmax(): 
+    
+    
+     # define engine
+    host="postgres_storage"
+    database="testDB"
+    user="me"
+    password="1234"
+    port='5432'
+    engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{database}')
+    
+    
+    #pull DF_Jordan from postgres
+    
+    DF_Jordan=pd.read_sql("SELECT * FROM DF_jordan" , engine);
+    
+    #select columns
+    Selec_Columns=['Confirmed','Deaths', 'Recovered', 'Active', 'Incident_Rate','Case_Fatality_Ratio']
+    DF_Jordan_2=DF_Jordan[Selec_Columns]
+    
+    #min max scaling
+    
+    from sklearn.preprocessing import MinMaxScaler
+    min_max_scaler = MinMaxScaler()
+    DF_Jordan_3 = pd.DataFrame(min_max_scaler.fit_transform(DF_Jordan_2[Selec_Columns]),columns=Selec_Columns)
+    DF_Jordan_3.index=DF_Jordan_2.index
+    DF_Jordan_3['Day']=DF_Jordan.Day
+    
+    
+    # define engine
+    host="postgres_storage"
+    database="testDB"
+    user="me"
+    password="1234"
+    port='5432'
+    engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{database}') 
+    
+    #insert DF_Jordan_3 into postgres
+    
+    DF_Jordan_3.to_sql('DF_jordan_3', engine, if_exists='replace', index=False)
     
     
     
-    
-    
-    DFpostgress=pd.read_sql("SELECT * FROM users2020" , engine);
     
     
     
