@@ -251,9 +251,9 @@ def reportpostgrestable():
     DF_Jordan_2=DF_Jordan[Selec_Columns]
     
     #push two tables to postgres 
-    Day='25_5_2021'
-DF_India_u_3.to_sql(f'india_scoring_report_{Day}', engine,if_exists='replace',index=False)
-DF_India_u_2.to_sql(f'india_scoring_notscaled_report_{Day}', engine,if_exists='replace',index=False)
+    Day='25_5_2021' #date may need revision 
+    DF_Jordan3.to_sql(f'india_scoring_report_{Day}', engine,if_exists='replace',index=False)
+    DF_Jordan_2.to_sql(f'india_scoring_notscaled_report_{Day}', engine,if_exists='replace',index=False)
     
     
     
