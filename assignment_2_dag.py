@@ -143,7 +143,7 @@ def selectColumns_minmax():
     
     #pull DF_Jordan from postgres
     
-    DF_Jordan=pd.read_sql("SELECT * FROM DF_jordan" , engine);
+    DF_Jordan=pd.read_sql('''SELECT * FROM "DF_jordan" ''' , engine);
     
     #select columns
     Selec_Columns=['Confirmed','Deaths', 'Recovered', 'Active', 'Incident_Rate','Case_Fatality_Ratio']
@@ -184,7 +184,7 @@ def reportpng():
     
     #pull DF_Jordan_3 from postgres
     
-    DF_Jordan_3=pd.read_sql("SELECT * FROM DF_jordan_3" , engine);
+    DF_Jordan_3=pd.read_sql('''SELECT * FROM "DF_jordan_3" ''', engine);
     
     #reporting as png
     import matplotlib.pyplot as plt 
@@ -197,7 +197,7 @@ def reportpng():
     Selec_Columns=['Confirmed','Deaths', 'Recovered', 'Active', 'Incident_Rate','Case_Fatality_Ratio']
     DF_Jordan_3[Selec_Columns].plot(figsize=(20,10))
     plt.grid()
-    plt.savefig('output/Jordan_scoring_report.png')
+    plt.savefig('opt/airflow/output/Jordan_scoring_report.png')
         
 
 
@@ -213,19 +213,19 @@ def reportcsv():
     
     #pull DF_Jordan_3 from postgres
     
-    DF_Jordan_3=pd.read_sql("SELECT * FROM DF_jordan_3" , engine);
+    DF_Jordan_3=pd.read_sql('''SELECT * FROM "DF_jordan_3" ''' , engine);
     
      #pull DF_Jordan from postgres
     
-    DF_Jordan=pd.read_sql("SELECT * FROM DF_jordan" , engine);
+    DF_Jordan=pd.read_sql('''SELECT * FROM "DF_jordan" ''' , engine);
 
-    DF_Jordan_3.to_csv('output/Jordan_scoring_report.csv')
+    DF_Jordan_3.to_csv('opt/airflow/output/Jordan_scoring_report.csv')
     
     #select columns
     Selec_Columns=['Confirmed','Deaths', 'Recovered', 'Active', 'Incident_Rate','Case_Fatality_Ratio']
     DF_Jordan_2=DF_Jordan[Selec_Columns]
     
-    DF_Jordan_2.to_csv('output/Jordan_scoring_report_NotScaled.csv')  #may need revesion
+    DF_Jordan_2.to_csv('opt/airflow/output/Jordan_scoring_report_NotScaled.csv')  #may need revesion
     
 def reportpostgrestable():
     # define engine
@@ -238,11 +238,11 @@ def reportpostgrestable():
     
     #pull DF_Jordan_3 from postgres
     
-    DF_Jordan_3=pd.read_sql("SELECT * FROM DF_jordan_3" , engine);    
+    DF_Jordan_3=pd.read_sql('''SELECT * FROM "DF_jordan_3" ''' , engine);    
     
      #pull DF_Jordan from postgres
     
-    DF_Jordan=pd.read_sql("SELECT * FROM DF_jordan" , engine);
+    DF_Jordan=pd.read_sql('''SELECT * FROM "DF_jordan" ''', engine);
 
     
     
@@ -251,9 +251,9 @@ def reportpostgrestable():
     DF_Jordan_2=DF_Jordan[Selec_Columns]
     
     #push two tables to postgres 
-    Day='25_5_2021' #date may need revision 
-    DF_Jordan_3.to_sql(f'india_scoring_report_{Day}', engine,if_exists='replace',index=False)
-    DF_Jordan_2.to_sql(f'india_scoring_notscaled_report_{Day}', engine,if_exists='replace',index=False)
+    Day='1_1_2021' #date may need revision 
+    DF_Jordan_3.to_sql(f'Jordan_scoring_report_{Day}', engine,if_exists='replace',index=False)
+    DF_Jordan_2.to_sql(f'Jordan_scoring_notscaled_report_{Day}', engine,if_exists='replace',index=False)
     
     
     
