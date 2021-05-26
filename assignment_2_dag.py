@@ -186,7 +186,18 @@ def reportpng():
     
     DF_Jordan_3=pd.read_sql("SELECT * FROM DF_jordan_3" , engine);
     
+    #reporting as png
+    import matplotlib.pyplot as plt 
+    import matplotlib
+    font = {'weight' : 'bold',
+        'size'   : 18}
     
+    
+    
+    Selec_Columns=['Confirmed','Deaths', 'Recovered', 'Active', 'Incident_Rate','Case_Fatality_Ratio']
+    DF_Jordan_3[Selec_Columns].plot(figsize=(20,10))
+    plt.grid()
+    plt.savefig('output/Jordan_scoring_report.png')
         
 
   
