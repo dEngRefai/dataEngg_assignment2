@@ -172,8 +172,19 @@ def selectColumns_minmax():
     
     
     
+     
+def reportpng():
+    # define engine
+    host="postgres_storage"
+    database="testDB"
+    user="me"
+    password="1234"
+    port='5432'
+    engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{database}') 
     
+    #pull DF_Jordan from postgres
     
+    DF_Jordan_3=pd.read_sql("SELECT * FROM DF_jordan_3" , engine);
     
     
         
