@@ -182,7 +182,7 @@ def reportpng():
     port='5432'
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{database}') 
     
-    #pull DF_Jordan from postgres
+    #pull DF_Jordan_3 from postgres
     
     DF_Jordan_3=pd.read_sql("SELECT * FROM DF_jordan_3" , engine);
     
@@ -200,8 +200,63 @@ def reportpng():
     plt.savefig('output/Jordan_scoring_report.png')
         
 
-  
 
+        
+def reportcsv():
+    # define engine
+    host="postgres_storage"
+    database="testDB"
+    user="me"
+    password="1234"
+    port='5432'
+    engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{database}') 
+    
+    #pull DF_Jordan_3 from postgres
+    
+    DF_Jordan_3=pd.read_sql("SELECT * FROM DF_jordan_3" , engine);
+    
+     #pull DF_Jordan from postgres
+    
+    DF_Jordan=pd.read_sql("SELECT * FROM DF_jordan" , engine);
+
+    DF_Jordan_3.to_csv('output/Jordan_scoring_report.csv')
+    
+    #select columns
+    Selec_Columns=['Confirmed','Deaths', 'Recovered', 'Active', 'Incident_Rate','Case_Fatality_Ratio']
+    DF_Jordan_2=DF_Jordan[Selec_Columns]
+    
+    DF_Jordan_2.to_csv('output/Jordan_scoring_report_NotScaled.csv')  #may need revesion
+    
+def reportpostgrestable():
+    # define engine
+    host="postgres_storage"
+    database="testDB"
+    user="me"
+    password="1234"
+    port='5432'
+    engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{database}') 
+    
+    #pull DF_Jordan_3 from postgres
+    
+    DF_Jordan_3=pd.read_sql("SELECT * FROM DF_jordan_3" , engine);    
+    
+     #pull DF_Jordan from postgres
+    
+    DF_Jordan=pd.read_sql("SELECT * FROM DF_jordan" , engine);
+
+    
+    
+    #select columns
+    Selec_Columns=['Confirmed','Deaths', 'Recovered', 'Active', 'Incident_Rate','Case_Fatality_Ratio']
+    DF_Jordan_2=DF_Jordan[Selec_Columns]
+    
+    #push two tables to postgres 
+    Day='25_5_2021'
+DF_India_u_3.to_sql(f'india_scoring_report_{Day}', engine,if_exists='replace',index=False)
+DF_India_u_2.to_sql(f'india_scoring_notscaled_report_{Day}', engine,if_exists='replace',index=False)
+    
+    
+    
 with DAG('postgressCSVJSONmongodbDAG',
         default_args=default_args,
         schedule_interval=timedelta(minutes=1),
