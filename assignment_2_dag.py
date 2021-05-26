@@ -259,7 +259,7 @@ def reportpostgrestable():
     
 with DAG('Assignment_2',
         default_args=default_args,
-        schedule_interval=timedelta(minutes=1),
+        schedule_interval=timedelta(minutes=30),
         catchup=False
         ) as dag:
 
