@@ -252,12 +252,12 @@ def reportpostgrestable():
     
     #push two tables to postgres 
     Day='25_5_2021' #date may need revision 
-    DF_Jordan3.to_sql(f'india_scoring_report_{Day}', engine,if_exists='replace',index=False)
+    DF_Jordan_3.to_sql(f'india_scoring_report_{Day}', engine,if_exists='replace',index=False)
     DF_Jordan_2.to_sql(f'india_scoring_notscaled_report_{Day}', engine,if_exists='replace',index=False)
     
     
     
-with DAG('postgressCSVJSONmongodbDAG',
+with DAG('Assignment_2',
         default_args=default_args,
         schedule_interval=timedelta(minutes=1),
         catchup=False
@@ -266,14 +266,18 @@ with DAG('postgressCSVJSONmongodbDAG',
 
     install_tools = PythonOperator(task_id="install_tools",
                                     python_callable=_install_tools)
-    getDATA = PythonOperator(task_id='QueryPostgreSQL', 
-                             python_callable=queryPostgresql)
-    CSVJson = PythonOperator(task_id='convertCSVtoJson', 
-                             python_callable=CSVToJson)
-    insertData = PythonOperator(task_id='InsertDataMongoDB', 
-                             python_callable=insertMongoDB)
+    extractfromGithub = PythonOperator(task_id='extractfromGithub', 
+                             python_callable=extractfromGithub)
+    selectColumns_minmax = PythonOperator(task_id='selectColumns_minmax', 
+                             python_callable=selectColumns_minmax)
+    reportpng = PythonOperator(task_id='reportpng', 
+                             python_callable=reportpng) 
+    reportcsv = PythonOperator(task_id='reportcsv', 
+                             python_callable=reportcsv)      
+    reportpostgrestable = PythonOperator(task_id='reportpostgrestable', 
+                             python_callable=reportpostgrestable)
 
 
-install_tools >> extractfromGithub
+install_tools >> extractfromGithub >> selectColumns_minmax >> [reportpng, reportcsv, reportpostgrestable]
 
  
