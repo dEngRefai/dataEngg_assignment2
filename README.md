@@ -22,7 +22,7 @@ instructions:
 10. use the port 8089 for pgadmin4
 11. the ports and passords can be found in the docker-compose file, however, they were not changed from the defaults originaly provided in class.
 12. after signing to jupter notebook, configuring the pdadmine, and running the dag successfully, the output can be viewed via the jupter notebook environment and the pgadmin.
-13. the following Youtube link provide a demo using google vm and ubunto 20.4 LTS, the docker version used can be installed following the instructions in the utilities folder.
+13. the following Youtube link provide a demo using google vm and Ubuntu 20.4 LTS, the docker version used can be installed following the instructions in the utilities folder.
 14. https://youtu.be/k7SfI7HjnNk
 
 oRefai
