@@ -124,7 +124,7 @@ services:
     image:  jupyter/minimal-notebook 
         
     volumes:
-      - ./notebooks:/home/jovyan/work
+      - ./dags:/home/jovyan/work
                 
     environment:
       JUPYTER_ENABLE_LAB: "yes"
